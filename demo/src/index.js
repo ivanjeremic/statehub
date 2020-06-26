@@ -1,15 +1,40 @@
-import React, {Component} from 'react'
-import {render} from 'react-dom'
+import React, { Component } from "react";
+import { render } from "react-dom";
 
-import Example from '../../src'
+import { useStateHub, StateHub } from "../../src";
 
-export default class Demo extends Component {
-  render() {
-    return <div>
-      <h1>statehub Demo</h1>
-      <Example/>
-    </div>
+function reducer(state, action) {
+  switch (action.type) {
+    case "CHANGENAME": {
+      return {
+        myname: "HAHA"
+      };
+    }
+    default:
+      return state;
   }
 }
 
-render(<Demo/>, document.querySelector('#demo'))
+function AppComponent() {
+  const { state, dispatch } = useStateHub();
+
+  const changeName = () => dispatch({ type: "CHANGENAME" });
+
+  return (
+    <div className="App">
+      <h1>{state.myname}</h1>
+      <button onClick={changeName}>Change</button>
+      <h2>Start editing to see some magic happen!</h2>
+    </div>
+  );
+}
+
+export default function Demo() {
+  return (
+    <StateHub initialState={{ myname: "Ivan" }} reducer={reducer}>
+      <AppComponent />
+    </StateHub>
+  );
+}
+
+render(<Demo />, document.querySelector("#demo"));
