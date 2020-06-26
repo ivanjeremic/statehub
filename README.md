@@ -6,15 +6,27 @@
 
 ![alt text](https://i.gyazo.com/dc9b5d784790ae4c112d4ddeac09165d.png)
 
-## Example
+### Wrap the 'StateHub' Provider around your App/Component then add an 'initialState' and a 'Reducer' as props. That's it! More details & CodeSandbox links below.
 
 ```javascript
-// code away!
+import React from "react";
+import { StateHub } from "statehub";
+import { reducer } from "./reducers/reducer";
 
-import React, { Component } from "react";
-import { render } from "react-dom";
+export default function Example() {
+  return (
+    <StateHub initialState={{ name: "Ivan", age: 31 }} reducer={reducer}>
+      <IneedStateComponent />
+    </StateHub>
+  );
+}
+```
 
-import { useStateHub, StateHub } from "../../src";
+## Full Example
+
+```javascript
+import React from "react";
+import { useStateHub, StateHub } from "statehub";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -31,9 +43,10 @@ function reducer(state, action) {
 function AppComponent() {
   const { state, dispatch } = useStateHub();
 
-  // Dispatch function to change the State.
+  // Dispatch function to change the State of 'myname'.
   const changeName = () => dispatch({ type: "CHANGENAME" });
 
+  // Now we use the function from above in the onClick event to change the State.
   return (
     <div>
       <h1>{state.myname}</h1>

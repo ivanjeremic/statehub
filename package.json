@@ -1,6 +1,6 @@
 {
   "name": "statehub",
-  "version": "0.1.0",
+  "version": "0.1.9",
   "description": "statehub React component",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -19,7 +19,9 @@
     "test:coverage": "nwb test-react --coverage",
     "test:watch": "nwb test-react --server"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@welldone-software/why-did-you-render": "^4.2.5"
+  },
   "peerDependencies": {
     "react": "16.x"
   },
