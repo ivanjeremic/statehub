@@ -1,4 +1,4 @@
-# statehub
+# StateHub
 
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
@@ -6,7 +6,7 @@
 
 ![alt text](https://i.gyazo.com/dc9b5d784790ae4c112d4ddeac09165d.png)
 
-## Example (Optional)
+## Example
 
 ```javascript
 // code away!
