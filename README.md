@@ -4,6 +4,8 @@
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
+![alt text](https://i.gyazo.com/dc9b5d784790ae4c112d4ddeac09165d.png)
+
 ## Example (Optional)
 
 ```javascript
