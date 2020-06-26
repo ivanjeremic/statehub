@@ -41,7 +41,7 @@ function reducer(state, action) {
 }
 
 function AppComponent() {
-  const { state, dispatch } = useStateHub();
+  const [state, dispatch] = useStateHub();
 
   // Dispatch function to change the State of 'myname'.
   const changeName = () => dispatch({ type: "CHANGENAME" });

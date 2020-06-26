@@ -5,10 +5,11 @@ const DispatchContext = createContext();
 
 function StateHub(props) {
   const { children, reducer, initialState } = props;
+  // initialize useReducer
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <Context.Provider value={{ initialState, state }}>
+    <Context.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
         {children}
       </DispatchContext.Provider>
@@ -16,7 +17,7 @@ function StateHub(props) {
   );
 }
 
-function useStateHub() {
+function checkProvideState() {
   const context = useContext(Context);
   if (context === undefined) {
     throw new Error("State must be used within a Provider");
@@ -24,7 +25,7 @@ function useStateHub() {
   return context;
 }
 
-function useDispatch() {
+function checkProvideDispatch() {
   const context = useContext(DispatchContext);
   if (context === undefined) {
     throw new Error("Dispatch must be used within a Provider");
@@ -32,16 +33,27 @@ function useDispatch() {
   return context;
 }
 
-/**
-If you need to support React < 16.8.0, or you think the Context needs to be consumed by class
-components, then here's how you could do something similar with the render-prop based API for context consumers: 
+/* 
+The state and dispatch separation is annoying!
+const state = useCountState()
+const dispatch = useCountDispatch()
+--------------------------
+>> This is the solution.
+*/
+function useStateHub() {
+  return [checkProvideState(), checkProvideDispatch()];
+}
+
+/*
+To support React < 16.8.0, where the Context needs to be consumed by class
+components, here the render-prop based API for context consumers: 
 */
 function Consumer({ children }) {
   return (
     <Context.Consumer>
       {context => {
         if (context === undefined) {
-          throw new Error("CountConsumer must be used within a CountProvider");
+          throw new Error("Consumer must be used within a Provider");
         }
         return children(context);
       }}
@@ -49,4 +61,4 @@ function Consumer({ children }) {
   );
 }
 
-export { StateHub, useStateHub, useDispatch, Consumer };
+export { StateHub, useStateHub, Consumer };
