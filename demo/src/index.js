@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 
-import { useStateHub, StateHub } from "../../src";
+import { StateHub, useStateHub, useDispatch } from "../../src";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -16,7 +16,8 @@ function reducer(state, action) {
 }
 
 function AppComponent() {
-  const { state, dispatch } = useStateHub();
+  const { state } = useStateHub();
+  const dispatch = useDispatch();
 
   const changeName = () => dispatch({ type: "CHANGENAME" });
 

@@ -4,7 +4,7 @@
 [![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
 
-![alt text](https://i.gyazo.com/dc9b5d784790ae4c112d4ddeac09165d.png)
+![alt text](https://i.gyazo.com/ae444147bc31116599b52ab0138b97d7.png)
 
 ### Wrap the 'StateHub' Provider around your App/Component then add an 'initialState' and a 'Reducer' as props. That's it! More details & CodeSandbox links below.
 
