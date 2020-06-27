@@ -8,6 +8,24 @@ function StateHub(props) {
   // initialize useReducer
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  /* const provideContextValue = () => {
+    if (state === undefined) {
+      throw new Error(
+        "initialState is undefined, set an initialState in your StateHub provider."
+      );
+    }
+    return state;
+  };
+
+  const provideDispatchContextValue = () => {
+    if (dispatch === undefined) {
+      throw new Error(
+        "No Reducer set, define a reducer in your StateHub provider."
+      );
+    }
+    return dispatch;
+  }; */
+
   return (
     <Context.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
@@ -48,7 +66,9 @@ function useStateHub() {
 To support React < 16.8.0, where the Context needs to be consumed by class
 components, here the render-prop based API for context consumers: 
 */
-function Consumer({ children }) {
+function Consumer(props) {
+  const { children } = props;
+
   return (
     <Context.Consumer>
       {context => {

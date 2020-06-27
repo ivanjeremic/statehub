@@ -6,7 +6,7 @@
 
 ![alt text](https://i.gyazo.com/ae444147bc31116599b52ab0138b97d7.png)
 
-### Wrap the 'StateHub' Provider around your App/Component then add an 'initialState' and a 'Reducer' as props. That's it! More details & CodeSandbox links below.
+### Wrap the `StateHub` Provider around your App/Component then add an `initialState` and a `reducer` as props. That's it!
 
 ```javascript
 import React from "react";
@@ -22,6 +22,19 @@ export default function Example() {
 }
 ```
 
+### Use the state within your `IneedStateComponent` with the `useStateHub` hook.
+
+```javascript
+import React from "react";
+import { useStateHub, StateHub } from "statehub";
+
+export default function IneedStateComponent() {
+  const [state, dispatch] = useStateHub();
+
+  return <h1>{state.name}</h1>;
+}
+```
+
 ## Full Example
 
 ```javascript
@@ -32,7 +45,7 @@ function reducer(state, action) {
   switch (action.type) {
     case "CHANGENAME": {
       return {
-        myname: "Peter"
+        name: "Peter"
       };
     }
     default:
@@ -43,13 +56,13 @@ function reducer(state, action) {
 function AppComponent() {
   const [state, dispatch] = useStateHub();
 
-  // Dispatch function to change the State of 'myname'.
+  // Dispatch function to change the State of 'name'.
   const changeName = () => dispatch({ type: "CHANGENAME" });
 
   // Now we use the function from above in the onClick event to change the State.
   return (
     <div>
-      <h1>{state.myname}</h1>
+      <h1>{state.name}</h1>
       <button onClick={changeName}>Change</button>
       <h2>Start editing to see some magic happen!</h2>
     </div>
@@ -58,7 +71,7 @@ function AppComponent() {
 
 export default function Example() {
   return (
-    <StateHub initialState={{ myname: "Ivan" }} reducer={reducer}>
+    <StateHub initialState={{ name: "Ivan" }} reducer={reducer}>
       <AppComponent />
     </StateHub>
   );
