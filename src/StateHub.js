@@ -6,15 +6,20 @@ const _ContextHub = createContext();
 
 function StateHub(props) {
   const { children, reducer, initialState, contextHub } = props;
+
   // initialize useReducer
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  if (state === undefined) {
-    throw new Error('State is undefined');
+  if (reducer !== undefined) {
+    if (state === undefined) {
+      throw new Error('initialState is undefined');
+    }
   }
 
-  if (reducer === undefined) {
-    throw new Error('reducer is undefined');
+  if (state !== undefined) {
+    if (reducer === undefined) {
+      throw new Error('reducer is undefined');
+    }
   }
 
   const hub = contextHub === undefined ? 'ContextHubx' : contextHub;
