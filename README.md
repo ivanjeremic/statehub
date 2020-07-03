@@ -115,7 +115,7 @@ import { StateHub } from 'statehub';
 import { reducer } from './reducers/reducer';
 
 function App() {
-  const [title, setTitle] = React.useState('Marion');
+  const [title, setTitle] = React.useState('My Title');
 
   return (
     <StateHub
