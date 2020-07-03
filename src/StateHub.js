@@ -1,32 +1,28 @@
-import React, { createContext, useContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer } from 'react';
 
 const Context = createContext();
 const DispatchContext = createContext();
 const _ContextHub = createContext();
 
 function StateHub(props) {
-  const { children, reducer, reducerState, contextHub } = props;
+  const { children, reducer, initialState, contextHub } = props;
   // initialize useReducer
-  const [state, dispatch] = useReducer(reducer, reducerState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   if (state === undefined) {
-    throw new Error("State is undefined");
+    throw new Error('State is undefined');
   }
 
   if (reducer === undefined) {
-    throw new Error("reducer is undefined");
+    throw new Error('reducer is undefined');
   }
 
-  const hub = contextHub === undefined ? "ContextHubx" : contextHub;
+  const hub = contextHub === undefined ? 'ContextHubx' : contextHub;
 
   return (
     <Context.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
-        <_ContextHub.Provider
-          value={hub}
-        >
-          {children}
-        </_ContextHub.Provider>
+        <_ContextHub.Provider value={hub}>{children}</_ContextHub.Provider>
       </DispatchContext.Provider>
     </Context.Provider>
   );
@@ -36,7 +32,7 @@ function StateHub(props) {
 function checkProvideState() {
   const context = useContext(Context);
   if (context === undefined) {
-    throw new Error("State must be used within a Provider");
+    throw new Error('State must be used within a Provider');
   }
   return context;
 }
@@ -44,7 +40,7 @@ function checkProvideState() {
 function checkProvideDispatch() {
   const context = useContext(DispatchContext);
   if (context === undefined) {
-    throw new Error("Dispatch must be used within a Provider");
+    throw new Error('Dispatch must be used within a Provider');
   }
   return context;
 }
@@ -53,7 +49,7 @@ function useContextHub() {
   const context = useContext(_ContextHub);
   if (context === undefined) {
     throw new Error(
-      "'checkProvideContextHub' - Dispatch must be used within a Provider",
+      "'checkProvideContextHub' - Dispatch must be used within a Provider"
     );
   }
   return context;
@@ -81,7 +77,7 @@ function Consumer(props) {
     <Context.Consumer>
       {(context) => {
         if (context === undefined) {
-          throw new Error("Consumer must be used within a Provider");
+          throw new Error('Consumer must be used within a Provider');
         }
         return children(context);
       }}
