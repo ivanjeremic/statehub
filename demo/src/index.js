@@ -26,7 +26,7 @@ function Demo() {
     <div className='App'>
       <h1>{state.name}</h1>
       <h1>{title}</h1>
-      <button onClick={(e) => setTitle('From UseState')}>Logg</button>
+      <button onClick={(e) => setTitle('From UseState')}>With useState</button>
       <button onClick={changeName}>changeName</button>
       <h2>Start editing to see some magic happen!</h2>
     </div>
