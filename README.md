@@ -107,6 +107,28 @@ You can access the above example like this:
 
 `const { openNavFunc, closeModalFunc, name } = useContextHub();`
 
+#You can also use them all together:
+
+```javascript
+import React from 'react';
+import { StateHub } from 'statehub';
+import { reducer } from './reducers/reducer';
+
+function App() {
+  const [title, setTitle] = React.useState('Marion');
+
+  return (
+    <StateHub
+      initialState={{ name: 'Ivan' }}
+      reducer={reducer}
+      contextHub={[title, setTitle]}
+    >
+      <Demo />
+    </StateHub>
+  );
+}
+```
+
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo
 [npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
