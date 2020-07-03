@@ -1,21 +1,23 @@
-# StateHub
+# StateHub - Easy Context API for React JS
 
-[![Travis][build-badge]][build]
-[![npm package][npm-badge]][npm]
-[![Coveralls][coveralls-badge]][coveralls]
+<p align="center">
+    <img src="https://i.gyazo.com/ae444147bc31116599b52ab0138b97d7.png">
+</p>
 
-![alt text](https://i.gyazo.com/ae444147bc31116599b52ab0138b97d7.png)
+![npm](https://img.shields.io/npm/v/statehub)
+![npm](https://img.shields.io/npm/dw/statehub)
+[![StateHub channel on discord](https://img.shields.io/badge/discord-%23statehub%20%40%20statehub-61dafb.svg?style=flat-square)](https://discord.gg/XwxXvV)
 
 ### Wrap the `StateHub` Provider around your App/Component then add an `initialState` and a `reducer` as props. That's it!
 
 ```javascript
-import React from "react";
-import { StateHub } from "statehub";
-import { reducer } from "./reducers/reducer";
+import React from 'react';
+import { StateHub } from 'statehub';
+import { reducer } from './reducers/reducer';
 
 export default function Example() {
   return (
-    <StateHub initialState={{ name: "Ivan", age: 31 }} reducer={reducer}>
+    <StateHub initialState={{ name: 'Ivan', age: 31 }} reducer={reducer}>
       <IneedStateComponent />
     </StateHub>
   );
@@ -25,8 +27,8 @@ export default function Example() {
 ### Use the state within your `IneedStateComponent` with the `useStateHub` hook.
 
 ```javascript
-import React from "react";
-import { useStateHub, StateHub } from "statehub";
+import React from 'react';
+import { useStateHub, StateHub } from 'statehub';
 
 export default function IneedStateComponent() {
   const [state, dispatch] = useStateHub();
@@ -38,14 +40,14 @@ export default function IneedStateComponent() {
 ## Full Example
 
 ```javascript
-import React from "react";
-import { useStateHub, StateHub } from "statehub";
+import React from 'react';
+import { useStateHub, StateHub } from 'statehub';
 
 function reducer(state, action) {
   switch (action.type) {
-    case "CHANGENAME": {
+    case 'CHANGENAME': {
       return {
-        name: "Peter"
+        name: 'Peter',
       };
     }
     default:
@@ -57,7 +59,7 @@ function AppComponent() {
   const [state, dispatch] = useStateHub();
 
   // Dispatch function to change the State of 'name'.
-  const changeName = () => dispatch({ type: "CHANGENAME" });
+  const changeName = () => dispatch({ type: 'CHANGENAME' });
 
   // Now we use the function from above in the onClick event to change the State.
   return (
@@ -71,12 +73,38 @@ function AppComponent() {
 
 export default function Example() {
   return (
-    <StateHub initialState={{ name: "Ivan" }} reducer={reducer}>
+    <StateHub initialState={{ name: 'Ivan' }} reducer={reducer}>
       <AppComponent />
     </StateHub>
   );
 }
 ```
+
+## Full Example
+
+with `useContextHub` you can access all kind of data for this you need to use the `contextHub` prop in the Provider, it is optional but also nice to have because you can fast prototype and test state with `useState` for example before you start adding a `reducer` or maybe useState is all you need in a specific component then you would simply pass your state to your component like this:
+
+```javascript
+const [title, setTitle] = React.useState('');
+
+<StateHub contextHub={[title, setTitle]}>
+  <IneedStateCompnent />
+</StateHub>;
+```
+
+You can access the above example like this:
+`const [title, setTitle] = useContextHub();`
+
+##Or you can put also an object here with any data like this:
+
+```javascript
+<StateHub contextHub={{ openNavFunction, closeModalFunction, name: 'Peter' }}>
+  <IneedStateCompnent />
+</StateHub>
+```
+
+You can access the above example like this:
+`const { openNavFunc, closeModalFunc, name } = useContextHub();`
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo

@@ -1,6 +1,6 @@
 {
   "name": "statehub",
-  "version": "0.3.0",
+  "version": "2.3.9",
   "description": "statehub React component",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -33,8 +33,5 @@
   "author": "Ivan Jeremic",
   "homepage": "https://github.com/ivanjeremic/statehub",
   "license": "MIT",
-  "repository": "https://github.com/ivanjeremic/statehub",
-  "keywords": [
-    "react-component"
-  ]
+  "repository": "https://github.com/ivanjeremic/statehub"
 }

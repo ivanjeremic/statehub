@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { render } from "react-dom";
 
-import { StateHub, useStateHub } from "../../src";
+import { StateHub, useStateHub, useContextHub } from "../../src";
 
 function reducer(state, action) {
   switch (action.type) {
     case "CHANGENAME": {
       return {
-        myname: "HAHA"
+        myname: "HAHA",
       };
     }
     default:
@@ -15,26 +15,41 @@ function reducer(state, action) {
   }
 }
 
-function AppComponent() {
+function Demo() {
   const [state, dispatch] = useStateHub();
+  const [title, setTitle] = useContextHub();
 
-  const changeName = () => dispatch({ type: "CHANGENAME" });
+  const [text, setText] = useState("");
 
   return (
     <div className="App">
       <h1>{state.myname}</h1>
-      <button onClick={changeName}>Change</button>
+      <h1>{title}</h1>
+      <button onClick={(e) => setTitle("Kalimero")}>Logg</button>
+      <input value={text} onChange={(e) => setText(e.target.value)} />
+      <button onClick={() => dispatch({ type: "CHANGENAME", text })}>
+        Change
+      </button>
       <h2>Start editing to see some magic happen!</h2>
     </div>
   );
 }
 
-export default function Demo() {
+function MainApp() {
+  const [title, setTitle] = React.useState("");
+
   return (
-    <StateHub initialState={{ myname: "Ivan" }} reducer={reducer}>
-      <AppComponent />
+    <StateHub
+      reducerState={{ myname: "Ivan" }}
+      reducer={reducer}
+      contextHub={[title, setTitle]}
+    >
+      <Demo />
     </StateHub>
   );
 }
 
-render(<Demo />, document.querySelector("#demo"));
+render(
+  <MainApp />,
+  document.querySelector("#demo"),
+);
