@@ -79,7 +79,7 @@ export default function Example() {
 }
 ```
 
-## useContextHub hook
+## useContextHub() hook
 
 With `useContextHub` you can access all kind of data for this you need to use the `contextHub` prop in the Provider, it is optional but also nice to have because you can fast prototype and test state with `useState` for example before you start adding a `reducer` or maybe useState is all you need in a specific component then you would simply pass your state to your component like this:
 
@@ -92,17 +92,19 @@ const [title, setTitle] = React.useState('');
 ```
 
 You can access the above example like this:
+
 `const [title, setTitle] = useContextHub();`
 
 ##Or you can put also an object here with any data like this:
 
 ```javascript
-<StateHub contextHub={{ openNavFunction, closeModalFunction, name: 'Peter' }}>
+<StateHub contextHub={{ openNavFunc, closeModalFunc, name: 'Peter' }}>
   <IneedStateCompnent />
 </StateHub>
 ```
 
 You can access the above example like this:
+
 `const { openNavFunc, closeModalFunc, name } = useContextHub();`
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
