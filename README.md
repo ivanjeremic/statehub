@@ -88,26 +88,28 @@ With `useContextHub` you can access all kind of data & functions, all you need i
 ```javascript
 const [title, setTitle] = React.useState('');
 
-<StateHub contextHub={[title, setTitle]}>
+<StateHub contextHub={{ title, setTitle }}>
   <IneedStateCompnent />
 </StateHub>;
 ```
 
 You can access the above example like this:
 
-`const [title, setTitle] = useContextHub();`
+`const { title, setTitle } = useContextHub();`
 
 ##Or you can put also an object here with any data like this:
 
 ```javascript
-<StateHub contextHub={{ openNavFunc, closeModalFunc, name: 'Peter' }}>
+const [title, setTitle] = React.useState('');
+
+<StateHub contextHub={{ title, setTitle, name: 'Peter' }}>
   <IneedStateCompnent />
-</StateHub>
+</StateHub>;
 ```
 
 You can access the above example like this:
 
-`const { openNavFunc, closeModalFunc, name } = useContextHub();`
+`const { title, setTitle, name } = useContextHub();`
 
 #You can also use them all together:
 
