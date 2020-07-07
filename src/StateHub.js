@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer } from "react";
 
 const Context = createContext();
 const DispatchContext = createContext();
@@ -12,17 +12,17 @@ function StateHub(props) {
 
   if (reducer !== undefined) {
     if (state === undefined) {
-      throw new Error('initialState is undefined');
+      throw new Error("initialState is undefined");
     }
   }
 
   if (state !== undefined) {
     if (reducer === undefined) {
-      throw new Error('reducer is undefined');
+      throw new Error("reducer is undefined");
     }
   }
 
-  const hub = contextHub === undefined ? 'ContextHubx' : contextHub;
+  const hub = contextHub === undefined ? "ContextHubx" : contextHub;
 
   return (
     <Context.Provider value={state}>
@@ -37,7 +37,7 @@ function StateHub(props) {
 function checkProvideState() {
   const context = useContext(Context);
   if (context === undefined) {
-    throw new Error('State must be used within a Provider');
+    throw new Error("State must be used within a Provider");
   }
   return context;
 }
@@ -45,7 +45,7 @@ function checkProvideState() {
 function checkProvideDispatch() {
   const context = useContext(DispatchContext);
   if (context === undefined) {
-    throw new Error('Dispatch must be used within a Provider');
+    throw new Error("Dispatch must be used within a Provider");
   }
   return context;
 }
@@ -54,7 +54,7 @@ function useContextHub() {
   const context = useContext(_ContextHub);
   if (context === undefined) {
     throw new Error(
-      "'checkProvideContextHub' - Dispatch must be used within a Provider"
+      "'checkProvideContextHub' - Dispatch must be used within a Provider",
     );
   }
   return context;
@@ -75,14 +75,14 @@ function useStateHub() {
 To support React < 16.8.0, where the Context needs to be consumed by class
 components, here the render-prop based API for context consumers: 
 */
-function Consumer(props) {
+function StateHubConsumer(props) {
   const { children } = props;
 
   return (
     <Context.Consumer>
       {(context) => {
         if (context === undefined) {
-          throw new Error('Consumer must be used within a Provider');
+          throw new Error("Consumer must be used within a Provider");
         }
         return children(context);
       }}
@@ -90,4 +90,4 @@ function Consumer(props) {
   );
 }
 
-export { StateHub, useStateHub, useContextHub, Consumer };
+export { StateHub, useStateHub, useContextHub, StateHubConsumer };
