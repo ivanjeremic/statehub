@@ -183,6 +183,9 @@ function App() {
 }
 ```
 
+INSPIRED TO CREATE THIS LIBRARY BY READING THIS ARTICLE WRITTEN BY Kent C. Dodds
+https://kentcdodds.com/blog/how-to-use-react-context-effectively
+
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo
 [npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square

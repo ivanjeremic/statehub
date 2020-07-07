@@ -1,5 +1,10 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
+/* ******************************************************************************** */
+// INSPIRED TO CREATE THIS LIBRARY BY READING THIS ARTICLE WRITTEN BY Kent C. Dodds
+// https://kentcdodds.com/blog/how-to-use-react-context-effectively
+/* ******************************************************************************** */
+
 const Context = createContext();
 const DispatchContext = createContext();
 const _ContextHub = createContext();
