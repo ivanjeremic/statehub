@@ -1,7 +1,7 @@
 {
   "name": "statehub",
-  "version": "2.7.1",
-  "description": "statehub React component",
+  "version": "2.7.2",
+  "description": "StateHub - Easy Context API for React JS",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
