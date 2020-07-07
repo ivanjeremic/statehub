@@ -3,4 +3,5 @@ export {
   useStateHub,
   useContextHub,
   StateHubConsumer,
+  ContextHubConsumer,
 } from './StateHub';
