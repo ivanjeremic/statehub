@@ -1,1 +1,6 @@
-export { StateHub, useStateHub, useContextHub, Consumer } from "./StateHub";
+export {
+  StateHub,
+  useStateHub,
+  useContextHub,
+  StateHubConsumer,
+} from './StateHub';
