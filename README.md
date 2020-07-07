@@ -99,7 +99,7 @@ You can access the above example like this:
 
 `const { title, setTitle } = useContextHub();`
 
-##Or you can put also an object here with any data like this:
+## Or you can put also an object here with any data like this:
 
 ```javascript
 const [title, setTitle] = React.useState('');
@@ -113,7 +113,7 @@ You can access the above example like this:
 
 `const { title, setTitle, name } = useContextHub();`
 
-#You can also use them all together:
+## You can also use them all together:
 
 ```javascript
 import React from 'react';
@@ -135,7 +135,7 @@ function App() {
 }
 ```
 
-#Support for Class Components:
+## Support for Class Components:
 
 To support React < 16.8.0, where the Context needs to be consumed by class
 components here the render-prop based API for context consumers:
