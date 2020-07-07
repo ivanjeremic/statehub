@@ -143,7 +143,7 @@ components here the render-prop based API for context consumers:
 Because StateHub provides 2 Hooks for consuming data it also has
 2 Consumers to use data, `StateHubConsumer` & `ContextHubConsumer`
 
-To Access values from the `initialState` use `StateHubConsumer`
+To Access values from the `initialState` use the `StateHubConsumer`
 
 ```javascript
 import React from 'react';
@@ -163,7 +163,7 @@ function App() {
 }
 ```
 
-To Access values from the `contextHub` Prop use `ContextHubConsumer`
+To Access values from the `contextHub` Prop use the `ContextHubConsumer`
 
 ```javascript
 import React from 'react';
