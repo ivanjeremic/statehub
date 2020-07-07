@@ -133,6 +133,52 @@ function App() {
 }
 ```
 
+To support React < 16.8.0, where the Context needs to be consumed by class
+components here the render-prop based API for context consumers:
+
+Because StateHub provides 2 Hooks for consuming data it also has
+2 Consumers to use data, `StateHubConsumer` & `ContextHubConsumer`
+
+To Access values from the `initialState` use `StateHubConsumer`
+
+```javascript
+import React from 'react';
+import { StateHubConsumer } from 'statehub';
+
+function App() {
+  return (
+    <StateHubConsumer>
+      {({ title, subtitle }) => (
+        <div>
+          <h1>{title}</h1>
+          <p>{subtitle}</p>
+        </div>
+      )}
+    </StateHubConsumer>
+  );
+}
+```
+
+To Access values from the `contextHub` Prop use `ContextHubConsumer`
+
+```javascript
+import React from 'react';
+import { ContextHubConsumer } from 'statehub';
+
+function App() {
+  return (
+    <ContextHubConsumer>
+      {({ title, subtitle }) => (
+        <div>
+          <h1>{title}</h1>
+          <p>{subtitle}</p>
+        </div>
+      )}
+    </ContextHubConsumer>
+  );
+}
+```
+
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo
 [npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
