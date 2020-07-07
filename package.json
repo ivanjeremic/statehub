@@ -1,6 +1,6 @@
 {
   "name": "statehub",
-  "version": "2.6.5",
+  "version": "2.6.8",
   "description": "statehub React component",
   "main": "lib/index.js",
   "module": "es/index.js",

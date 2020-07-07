@@ -7,9 +7,11 @@
 ![npm](https://img.shields.io/npm/v/statehub)
 ![npm](https://img.shields.io/npm/dw/statehub)
 
+[> Support added for Class Consumers more here <](#support-for-class-components)
+
 #### Wrap the `StateHub` Provider around your App/Component then add an `initialState` and a `reducer` as Props, That's it!
 
-##### **_You don't have to use `reducers` if you don't want to!_** Just use the `contextHub` Prop with values since `StateHub` has two hooks for accessing data, `useStateHub` & `useContextHub` first is used to access the state from the `initialState` wich can be manipulated by the `reducer`, second is to access any data or functions you put in the `contextHub` Prop, read more about `useContextHub` [here](https://www.npmjs.com/package/statehub#usecontexthub-hook).
+##### **_You don't have to use `reducers` if you don't want to!_** Just use the `contextHub` Prop with values since `StateHub` has two hooks for accessing data, `useStateHub` & `useContextHub` first is used to access the state from the `initialState` wich can be manipulated by the `reducer`, second is to access any data or functions you put in the `contextHub` Prop, read more about `useContextHub` [> HERE <](#usecontexthub-hook).
 
 ```javascript
 import React from 'react';
@@ -125,13 +127,15 @@ function App() {
     <StateHub
       initialState={{ name: 'Ivan' }}
       reducer={reducer}
-      contextHub={[title, setTitle]}
+      contextHub={{ title, setTitle }}
     >
       <Demo />
     </StateHub>
   );
 }
 ```
+
+#Support for Class Components:
 
 To support React < 16.8.0, where the Context needs to be consumed by class
 components here the render-prop based API for context consumers:
