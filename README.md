@@ -11,7 +11,7 @@
 
 #### Wrap the `StateHub` Provider around your App/Component then add an `initialState` and a `reducer` as Props, That's it!
 
-##### **_You don't have to use `reducers` if you don't want to!_** Just use the `contextHub` Prop with values since `StateHub` has two hooks for accessing data, `useStateHub` & `useContextHub` first is used to access the state from the `initialState` which can be manipulated by the `reducer`, second is to access any data or functions you put in the `contextHub` Prop, read more about `useContextHub` [> HERE <](#usecontexthub-hook).
+#### You don't have to use `reducers` if you don't want to! Just use the `contextHub` Prop with values since `StateHub` has two hooks for accessing data, `useStateHub` & `useContextHub` first is used to access the state from the `initialState` which can be manipulated by the `reducer`, second is to access any data or functions you put in the `contextHub` Prop, read more about `useContextHub` [> HERE <](#usecontexthub-hook).
 
 ```javascript
 import React from 'react';
