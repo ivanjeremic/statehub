@@ -1,47 +1,44 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 
-import { StateHub, useStateHub, useContextHub } from '../../src';
+import { StateHub, useStateHub, createHub } from '../../src';
 
-function reducer(state, action) {
-  switch (action.type) {
-    case 'CHANGENAME': {
-      return {
-        name: 'Peter',
-      };
+const DemoHub = createHub({
+  initialState: { name: 'AppTwostore' },
+  reducer: (state, action) => {
+    switch (action.type) {
+      case 'CHANGENAME': {
+        return {
+          name: 'Peter',
+        };
+      }
+      default:
+        return state;
     }
-    default:
-      return state;
-  }
-}
+  },
+});
 
 function Demo() {
-  const [state, dispatch] = useStateHub();
-  const [title, setTitle] = useContextHub();
+  const [state, dispatch] = useStateHub(DemoHub);
 
   // Dispatch function to change the State of 'name'.
-  const changeName = () => dispatch({ type: 'CHANGENAME' });
+  const changenameHandler = () => {
+    dispatch({ type: 'CHANGENAME' });
+  };
 
   return (
     <div className='App'>
-      <h1>{state.name}</h1>
-      <h1>{title}</h1>
-      <button onClick={(e) => setTitle('From UseState')}>With useState</button>
-      <button onClick={changeName}>changeName</button>
-      <h2>Start editing to see some magic happen!</h2>
+      <h1>{`${state.name}AppTwo`}</h1>
+      <button type='button' onClick={changenameHandler}>
+        Change
+      </button>
     </div>
   );
 }
 
 function MainApp() {
-  const [title, setTitle] = React.useState('Marion');
-
   return (
-    <StateHub
-      initialState={{ name: 'Ivan' }}
-      reducer={reducer}
-      contextHub={[title, setTitle]}
-    >
+    <StateHub hub={DemoHub}>
       <Demo />
     </StateHub>
   );

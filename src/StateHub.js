@@ -1,69 +1,53 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
-/* ******************************************************************************** */
-// INSPIRED TO CREATE THIS LIBRARY BY READING THIS ARTICLE WRITTEN BY Kent C. Dodds
-// https://kentcdodds.com/blog/how-to-use-react-context-effectively
-/* ******************************************************************************** */
-
-const Context = createContext();
-const DispatchContext = createContext();
-const _ContextHub = createContext();
-
 function StateHub(props) {
-  const { children, reducer, initialState, contextHub } = props;
+  const { children, hub } = props;
+
+  const { ThisContext, ThisDispatch, ThisHub } = hub;
+
+  let ContextContainer = ThisContext;
+  let DispatchContainer = ThisDispatch;
 
   // initialize useReducer
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(ThisHub?.reducer, ThisHub?.initialState);
 
-  if (reducer !== undefined) {
-    if (state === undefined) {
+  if (typeof ThisHub?.reducer !== undefined) {
+    if (typeof state === undefined) {
       throw new Error('initialState is undefined');
     }
   }
 
-  if (state !== undefined) {
-    if (reducer === undefined) {
+  if (typeof state !== undefined) {
+    if (typeof ThisHub?.reducer === undefined) {
       throw new Error('reducer is undefined');
     }
   }
 
-  const hub = contextHub === undefined ? 'ContextHubx' : contextHub;
-
   return (
-    <Context.Provider value={state}>
-      <DispatchContext.Provider value={dispatch}>
-        <_ContextHub.Provider value={hub}>{children}</_ContextHub.Provider>
-      </DispatchContext.Provider>
-    </Context.Provider>
+    <ContextContainer.Provider value={state}>
+      <DispatchContainer.Provider value={dispatch}>
+        {children}
+      </DispatchContainer.Provider>
+    </ContextContainer.Provider>
   );
 }
-
-// checkProvideState
-function checkProvideState() {
-  const context = useContext(Context);
+// CheckProvideState
+const CheckProvideState = (ThisContext) => {
+  const context = useContext(ThisContext);
   if (context === undefined) {
     throw new Error('State must be used within a Provider');
   }
   return context;
-}
-// checkProvideDispatch
-function checkProvideDispatch() {
-  const context = useContext(DispatchContext);
+};
+
+// CheckProvideDispatch
+const CheckProvideDispatch = (ThisDispatch) => {
+  const context = useContext(ThisDispatch);
   if (context === undefined) {
     throw new Error('Dispatch must be used within a Provider');
   }
   return context;
-}
-// useContextHub
-function useContextHub() {
-  const context = useContext(_ContextHub);
-  if (context === undefined) {
-    throw new Error(
-      "'checkProvideContextHub' - Dispatch must be used within a Provider"
-    );
-  }
-  return context;
-}
+};
 
 /* 
 The state and dispatch separation is annoying!
@@ -72,49 +56,17 @@ const dispatch = useCountDispatch()
 --------------------------
 >> This is the solution.
 */
-function useStateHub() {
-  return [checkProvideState(), checkProvideDispatch()];
-}
-
-/*
-To support React < 16.8.0, where the Context needs to be consumed by class
-components, here the render-prop based API for context consumers: 
-*/
-function StateHubConsumer(props) {
-  const { children } = props;
-
-  return (
-    <Context.Consumer>
-      {(context) => {
-        if (context === undefined) {
-          throw new Error('Consumer must be used within a Provider');
-        }
-        return children(context);
-      }}
-    </Context.Consumer>
-  );
-}
-
-// Consumer for ContextHubConsumer
-function ContextHubConsumer(props) {
-  const { children } = props;
-
-  return (
-    <_ContextHub.Consumer>
-      {(context) => {
-        if (context === undefined) {
-          throw new Error('Consumer must be used within a Provider');
-        }
-        return children(context);
-      }}
-    </_ContextHub.Consumer>
-  );
-}
-
-export {
-  StateHub,
-  useStateHub,
-  useContextHub,
-  StateHubConsumer,
-  ContextHubConsumer,
+const useStateHub = (hub) => {
+  const { ThisContext, ThisDispatch } = hub;
+  return [CheckProvideState(ThisContext), CheckProvideDispatch(ThisDispatch)];
 };
+
+function createHub(hub) {
+  return {
+    ThisContext: createContext(),
+    ThisDispatch: createContext(),
+    ThisHub: hub,
+  };
+}
+
+export { StateHub, useStateHub, createHub };

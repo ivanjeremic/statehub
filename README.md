@@ -9,57 +9,53 @@
 
 [> Support added for Class Consumers more here <](#support-for-class-components)
 
-#### Wrap the `StateHub` Provider around your App/Component then add an `initialState` and a `reducer` as Props, That's it!
+#### Everything starts with creating a new hub with `createHub`.
 
-#### You don't have to use `reducers` if you don't want to! Just use the `contextHub` Prop with values since `StateHub` has two hooks for accessing data, `useStateHub` & `useContextHub` first is used to access the state from the `initialState` which can be manipulated by the `reducer`, second is to access any data or functions you put in the `contextHub` Prop, read more about `useContextHub` [> HERE <](#usecontexthub-hook).
+```javascript
+import React from 'react';
+import { createHub } from 'statehub';
+
+export const DemoHub = createHub({
+  initialState: { name: 'Alex' },
+  reducer: (state, action) => {
+    switch (action.type) {
+      case 'CHANGENAME': {
+        return {
+          name: 'Peter',
+        };
+      }
+      default:
+        return state;
+    }
+  },
+});
+```
+
+### Now wrap your app with the StateHub provider and pass your created hub in..
 
 ```javascript
 import React from 'react';
 import { StateHub } from 'statehub';
-import { reducer } from './reducers/reducer';
+import { DemoHub } from '../hubs/DemoHub';
 
-export default function Example() {
+export default function App() {
   return (
-    <StateHub initialState={{ name: 'Ivan', age: 31 }} reducer={reducer}>
+    <StateHub hub={DemoHub}>
       <IneedStateComponent />
     </StateHub>
   );
 }
 ```
 
-### Use the state within your `IneedStateComponent` with the `useStateHub` hook.
+## Now you can use the state in your component with the `useStateHub` hook.
 
 ```javascript
 import React from 'react';
-import { useStateHub, StateHub } from 'statehub';
+import { useStateHub } from 'statehub';
+import { DemoHub } from '../hubs/DemoHub';
 
-export default function IneedStateComponent() {
-  const [state, dispatch] = useStateHub();
-
-  return <h1>{state.name}</h1>;
-}
-```
-
-## Full Example
-
-```javascript
-import React from 'react';
-import { useStateHub, StateHub } from 'statehub';
-
-function reducer(state, action) {
-  switch (action.type) {
-    case 'CHANGENAME': {
-      return {
-        name: 'Peter',
-      };
-    }
-    default:
-      return state;
-  }
-}
-
-function AppComponent() {
-  const [state, dispatch] = useStateHub();
+function IneedStateComponent() {
+  const [state, dispatch] = useStateHub(DemoHub); // Define the hub.
 
   // Dispatch function to change the State of 'name'.
   const changeName = () => dispatch({ type: 'CHANGENAME' });
@@ -69,71 +65,32 @@ function AppComponent() {
     <div>
       <h1>{state.name}</h1>
       <button onClick={changeName}>Change</button>
-      <h2>Start editing to see some magic happen!</h2>
     </div>
   );
 }
 
-export default function Example() {
-  return (
-    <StateHub initialState={{ name: 'Ivan' }} reducer={reducer}>
-      <AppComponent />
-    </StateHub>
-  );
-}
+export default IneedStateComponent;
 ```
 
-## useContextHub() hook
-
-With `useContextHub` you can access all kind of data & functions, all you need is to use the `contextHub` Prop in the `StateHub` Provider, it is optional but also nice to have because you can fast prototype and test state with `useState` for example before you start adding a `reducer` or maybe useState is all you need in a specific component then you would simply pass your state to your component like this:
+## You can use as manny hubs as you want.
 
 ```javascript
 const [title, setTitle] = React.useState('');
 
-<StateHub contextHub={{ title, setTitle }}>
-  <IneedStateCompnent />
-</StateHub>;
-```
-
-You can access the above example like this:
-
-`const { title, setTitle } = useContextHub();`
-
-## Or you can put also an object here with any data like this:
-
-```javascript
-const [title, setTitle] = React.useState('');
-
-<StateHub contextHub={{ title, setTitle, name: 'Peter' }}>
-  <IneedStateCompnent />
-</StateHub>;
-```
-
-You can access the above example like this:
-
-`const { title, setTitle, name } = useContextHub();`
-
-## You can also use them all together:
-
-```javascript
-import React from 'react';
-import { StateHub } from 'statehub';
-import { reducer } from './reducers/reducer';
-
-function App() {
-  const [title, setTitle] = React.useState('My Title');
-
-  return (
-    <StateHub
-      initialState={{ name: 'Ivan' }}
-      reducer={reducer}
-      contextHub={{ title, setTitle }}
-    >
-      <Demo />
+<StateHub hub={AuthHub}>
+  <StateHub hub={DatabaseHub}>
+    <StateHub hub={ResponsiveHub}>
+      <StateHub hub={ModalHub}>
+        <App />
+      </StateHub>
     </StateHub>
-  );
-}
+  </StateHub>
+</StateHub>;
 ```
+
+## createHub API:
+
+in work...
 
 ## Support for Class Components:
 
@@ -162,29 +119,6 @@ function App() {
   );
 }
 ```
-
-To Access values from the `contextHub` Prop use the `ContextHubConsumer`
-
-```javascript
-import React from 'react';
-import { ContextHubConsumer } from 'statehub';
-
-function App() {
-  return (
-    <ContextHubConsumer>
-      {({ title, subtitle }) => (
-        <div>
-          <h1>{title}</h1>
-          <p>{subtitle}</p>
-        </div>
-      )}
-    </ContextHubConsumer>
-  );
-}
-```
-
-INSPIRED TO CREATE THIS LIBRARY BY READING THIS ARTICLE WRITTEN BY Kent C. Dodds
-https://kentcdodds.com/blog/how-to-use-react-context-effectively
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo
