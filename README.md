@@ -36,9 +36,9 @@ export const DemoHub = createHub({
 });
 ```
 
-### Now wrap your app with the Provider which comes with the hub you created before.
+### Now wrap your App with the Provider who comes with the DemoHub you created before.
 
-#### As you can see the API is very clean everything you ever import is your created StateHub and nothing more.
+#### As you can see the API is very clean everything you ever `import` is your created StateHub and nothing more.
 
 ```javascript
 import React from 'react';
