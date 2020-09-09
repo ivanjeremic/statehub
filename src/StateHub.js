@@ -30,6 +30,9 @@ const createHub = (options) => {
         CheckProvideMethods(ThisMethods),
       ];
     },
+    methods: () => {
+      return CheckProvideMethods(ThisMethods);
+    },
     Provider: ({ children }) => {
       const [state, dispatch] = useReducer(options?.reducer, options?.state);
 

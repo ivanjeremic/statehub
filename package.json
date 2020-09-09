@@ -1,6 +1,6 @@
 {
   "name": "statehub",
-  "version": "4.0.2",
+  "version": "4.0.4",
   "description": "StateHub - Easy Context API for React JS",
   "main": "lib/index.js",
   "module": "es/index.js",
