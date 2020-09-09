@@ -1,16 +1,19 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
-const CheckProvideState = (ThisContext) => {
+const StateContainer = (ThisContext) => {
+  // add checks
   const context = useContext(ThisContext);
   return context;
 };
 
-const CheckProvideDispatch = (ThisDispatch) => {
+const DispatchContainer = (ThisDispatch) => {
+  // add checks
   const context = useContext(ThisDispatch);
   return context;
 };
 
-const CheckProvideMethods = (ThisMethods) => {
+const MethodsContainer = (ThisMethods) => {
+  // add checks
   const context = useContext(ThisMethods);
   return context;
 };
@@ -25,13 +28,13 @@ const createHub = (options) => {
   return {
     use: () => {
       return [
-        CheckProvideState(ThisContext),
-        CheckProvideDispatch(ThisDispatch),
-        CheckProvideMethods(ThisMethods),
+        StateContainer(ThisContext),
+        DispatchContainer(ThisDispatch),
+        MethodsContainer(ThisMethods),
       ];
     },
     methods: () => {
-      return CheckProvideMethods(ThisMethods);
+      return MethodsContainer(ThisMethods);
     },
     Provider: ({ children }) => {
       const [state, dispatch] = useReducer(options?.reducer, options?.state);
