@@ -64,7 +64,6 @@ import { DemoHub } from '../hubs/DemoHub';
 function App() {
   const [state, dispatch, methods] = DemoHub.use(); // call .use() to use the state.
 
-  // Now we use the dispatch in the onClick event to change the State.
   return (
     <div>
       <h2>{state.title}</h2>
