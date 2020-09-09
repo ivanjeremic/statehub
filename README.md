@@ -7,7 +7,7 @@
 ![npm](https://img.shields.io/npm/v/statehub)
 ![npm](https://img.shields.io/npm/dw/statehub)
 
-#### Everything starts with creating a new StateHub with `createHub`, and this StateHub is everything you will ever need in your components, no other unnecessary imports!
+Everything starts with creating a new StateHub with `createHub`, and this StateHub is everything you will ever need in your components, no other unnecessary imports!
 
 ```javascript
 import { createHub } from 'statehub';
@@ -36,9 +36,9 @@ export const DemoHub = createHub({
 });
 ```
 
-### Now wrap your App with the Provider who comes with the DemoHub you created before.
+Now wrap your App with the Provider who comes with the DemoHub you created before.
 
-#### As you can see the API is very clean everything you ever `import` is your created StateHub and nothing more.
+\*As you can see the API is very clean everything you ever `import` is your created StateHub and nothing more.
 
 ```javascript
 import React from 'react';
@@ -53,9 +53,9 @@ export default function Index() {
 }
 ```
 
-### Now you can use the state in your component.
+Now you can use the state in your component.
 
-#### And again you can see, everything you need is coming from your created StateHub, no other imports are required except your DemoHub.
+And again you can see, everything you need is coming from your created StateHub, no other imports are required except your DemoHub.
 
 ```javascript
 import React from 'react';
@@ -88,7 +88,7 @@ function App() {
 export default App;
 ```
 
-### You can use as manny hubs as you want.
+You can use as many StateHubs as you want.
 
 ```javascript
 import React from 'react';
@@ -110,7 +110,7 @@ export default function Index() {
 }
 ```
 
-### Support for Class Components:
+Support for Class Components:
 
 To support React < 16.8.0, where the Context needs to be consumed by class
 components here the render-prop based API for context consumers:
