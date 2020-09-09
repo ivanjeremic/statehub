@@ -1,36 +1,49 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import { StateHub, useStateHub, createHub } from '../../src';
+import { createHub } from '../../src';
 
 const DemoHub = createHub({
-  initialState: { name: 'AppTwostore' },
+  initialState: { title: 'Welcome to StateHub' },
   reducer: (state, action) => {
     switch (action.type) {
-      case 'CHANGENAME': {
+      case 'CHANGE_TITLE': {
         return {
-          name: 'Peter',
+          title: 'This is the changed StateHub title.',
         };
       }
       default:
         return state;
     }
   },
+  methods: {
+    LogSomething: function () {
+      console.log('Hello Statehub');
+    },
+    AlertSomething: function () {
+      alert('StateHub Alert!');
+    },
+  },
 });
 
 function Demo() {
-  const [state, dispatch] = useStateHub(DemoHub);
-
-  // Dispatch function to change the State of 'name'.
-  const changenameHandler = () => {
-    dispatch({ type: 'CHANGENAME' });
-  };
+  const [state, dispatch] = DemoHub.use();
 
   return (
-    <div className='App'>
-      <h1>{`${state.name}AppTwo`}</h1>
-      <button type='button' onClick={changenameHandler}>
-        Change
+    <div>
+      <h2>{state.title}</h2>
+      <button onClick={() => dispatch({ type: 'CHANGE_TITLE' })}>
+        Change Title
+      </button>
+
+      <h2>Method Example 1:</h2>
+      <button type='button' onClick={methods.LogSomething}>
+        Log something to the console
+      </button>
+
+      <h2>Method Example 2:</h2>
+      <button type='button' onClick={methods.AlertSomething}>
+        Trigger alert
       </button>
     </div>
   );
@@ -38,9 +51,9 @@ function Demo() {
 
 function MainApp() {
   return (
-    <StateHub hub={DemoHub}>
+    <DemoHub.Provider>
       <Demo />
-    </StateHub>
+    </DemoHub.Provider>
   );
 }
 
