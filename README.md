@@ -7,116 +7,143 @@
 ![npm](https://img.shields.io/npm/v/statehub)
 ![npm](https://img.shields.io/npm/dw/statehub)
 
-[> Support added for Class Consumers more here <](#support-for-class-components)
-
-#### Everything starts with creating a new hub with `createHub`.
+#### Everything starts with creating a new StateHub with `createHub`, and this StateHub is everything you will ever need in your components, no other unnecessary imports!
 
 ```javascript
-import React from 'react';
 import { createHub } from 'statehub';
 
 export const DemoHub = createHub({
-  initialState: { name: 'Alex' },
+  initialState: { title: 'Welcome to StateHub' },
   reducer: (state, action) => {
     switch (action.type) {
-      case 'CHANGENAME': {
+      case 'CHANGE_TITLE': {
         return {
-          name: 'Peter',
+          title: 'This is the changed StateHub title.',
         };
       }
       default:
         return state;
     }
   },
+  methods: {
+    LogSomething: function () {
+      console.log('Hello Statehub');
+    },
+    AlertSomething: function () {
+      alert('StateHub Alert!');
+    },
+  },
 });
 ```
 
-### Now wrap your app with the StateHub provider and pass your created hub in..
+### Now wrap your app with the Provider which comes with the hub you created before.
+
+#### As you can see the API is very clean everything you ever import is your created StateHub and nothing more.
 
 ```javascript
 import React from 'react';
-import { StateHub } from 'statehub';
 import { DemoHub } from '../hubs/DemoHub';
 
-export default function App() {
+export default function Index() {
   return (
-    <StateHub hub={DemoHub}>
-      <IneedStateComponent />
-    </StateHub>
+    <DemoHub.Provider>
+      <App />
+    </DemoHub.Provider>
   );
 }
 ```
 
-## Now you can use the state in your component with the `useStateHub` hook.
+### Now you can use the state in your component.
+
+#### And again you can see, everything you need is coming from your created StateHub, no other imports are required except your DemoHub.
 
 ```javascript
 import React from 'react';
-import { useStateHub } from 'statehub';
 import { DemoHub } from '../hubs/DemoHub';
 
-function IneedStateComponent() {
-  const [state, dispatch] = useStateHub(DemoHub); // Define the hub.
+function App() {
+  const [state, dispatch] = DemoHub.use(); // call .use() to use the state.
 
-  // Dispatch function to change the State of 'name'.
-  const changeName = () => dispatch({ type: 'CHANGENAME' });
-
-  // Now we use the function from above in the onClick event to change the State.
+  // Now we use the dispatch in the onClick event to change the State.
   return (
     <div>
-      <h1>{state.name}</h1>
-      <button onClick={changeName}>Change</button>
+      <h2>{state.title}</h2>
+      <button onClick={() => dispatch({ type: 'CHANGE_TITLE' })}>
+        Change Title
+      </button>
+
+      <h2>Method Example 1:</h2>
+      <button type='button' onClick={methods.LogSomething}>
+        Log something to the console
+      </button>
+
+      <h2>Method Example 2:</h2>
+      <button type='button' onClick={methods.AlertSomething}>
+        Trigger alert
+      </button>
     </div>
   );
 }
 
-export default IneedStateComponent;
+export default App;
 ```
 
-## You can use as manny hubs as you want.
+### You can use as manny hubs as you want.
 
 ```javascript
-const [title, setTitle] = React.useState('');
+import React from 'react';
+import App from '../components/App';
+import { AuthHub, DatabaseHub, ResponsiveHub, ModalHub } from '../hubs/DemoHub';
 
-<StateHub hub={AuthHub}>
-  <StateHub hub={DatabaseHub}>
-    <StateHub hub={ResponsiveHub}>
-      <StateHub hub={ModalHub}>
-        <App />
-      </StateHub>
-    </StateHub>
-  </StateHub>
-</StateHub>;
+export default function Index() {
+  return (
+    <AuthHub.Provider>
+      <DatabaseHub.Provider>
+        <ResponsiveHub.Provider>
+          <ModalHub.Provider>
+            <App />
+          </ModalHub.Provider>
+        </ResponsiveHub.Provider>
+      </DatabaseHub.Provider>
+    </AuthHub.Provider>
+  );
+}
 ```
 
-## createHub API:
-
-in work...
-
-## Support for Class Components:
+### Support for Class Components:
 
 To support React < 16.8.0, where the Context needs to be consumed by class
 components here the render-prop based API for context consumers:
 
-Because StateHub provides 2 Hooks for consuming data it also has
-2 Consumers to use data, `StateHubConsumer` & `ContextHubConsumer`
-
-To Access values from the `initialState` use the `StateHubConsumer`
-
 ```javascript
 import React from 'react';
-import { StateHubConsumer } from 'statehub';
+import { DemoHub } from '../hubs/DemoHub';
 
-function App() {
-  return (
-    <StateHubConsumer>
-      {({ title, subtitle }) => (
-        <div>
-          <h1>{title}</h1>
-          <p>{subtitle}</p>
-        </div>
-      )}
-    </StateHubConsumer>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <DemoHub.Consumer>
+        {(state, dispatch, methods) => (
+          <div>
+            <h2>{state.title}</h2>
+            <button onClick={() => dispatch({ type: 'CHANGE_TITLE' })}>
+              Change Title
+            </button>
+
+            <h2>Method Example 1:</h2>
+            <button type='button' onClick={methods.LogSomething}>
+              Log something to the console
+            </button>
+
+            <h2>Method Example 2:</h2>
+            <button type='button' onClick={methods.AlertSomething}>
+              Trigger alert
+            </button>
+          </div>
+        )}
+      </DemoHub.Consumer>
+    );
+  }
 }
 ```
 

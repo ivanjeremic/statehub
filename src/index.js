@@ -1,1 +1,1 @@
-export { StateHub, useStateHub, createHub } from './StateHub';
+export { createHub } from './StateHub';
