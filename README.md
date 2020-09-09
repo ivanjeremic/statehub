@@ -7,7 +7,7 @@
 ![npm](https://img.shields.io/npm/v/statehub)
 ![npm](https://img.shields.io/npm/dw/statehub)
 
-Everything starts with creating a new StateHub with `createHub`, and this StateHub is everything you will ever need in your components, no other unnecessary imports!
+Everything starts with creating a new StateHub with `createHub`, this StateHub is everything you will ever need in your components, no other unnecessary imports!
 
 ```javascript
 import { createHub } from 'statehub';
