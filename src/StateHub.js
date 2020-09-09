@@ -1,24 +1,20 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
-// CheckProvideState
 const CheckProvideState = (ThisContext) => {
   const context = useContext(ThisContext);
   return context;
 };
 
-// CheckProvideDispatch
 const CheckProvideDispatch = (ThisDispatch) => {
   const context = useContext(ThisDispatch);
   return context;
 };
 
-// CheckProvideDispatch
 const CheckProvideMethods = (ThisMethods) => {
   const context = useContext(ThisMethods);
   return context;
 };
 
-// createHub
 const createHub = (options) => {
   const ThisContext = createContext({});
   const ThisDispatch = createContext({});

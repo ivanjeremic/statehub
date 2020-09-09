@@ -13,7 +13,7 @@
 import { createHub } from 'statehub';
 
 export const DemoHub = createHub({
-  initialState: { title: 'Welcome to StateHub' },
+  state: { title: 'Welcome to StateHub' },
   reducer: (state, action) => {
     switch (action.type) {
       case 'CHANGE_TITLE': {
