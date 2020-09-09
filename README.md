@@ -97,7 +97,6 @@ import { DemoHub } from '../hubs/DemoHub';
 function App() {
   const { LogSomething, AlertSomething } = DemoHub.methods();
 
-  // Now we use the dispatch in the onClick event to change the State.
   return (
     <div>
       <h2>Method Example 1:</h2>
