@@ -88,6 +88,34 @@ function App() {
 export default App;
 ```
 
+state & reducer is optional that means you can create StateHub's with methods only and retrieve them directly where needed by calling `YourHub.methods()`.
+
+```javascript
+import React from 'react';
+import { DemoHub } from '../hubs/DemoHub';
+
+function App() {
+  const { LogSomething, AlertSomething } = DemoHub.methods();
+
+  // Now we use the dispatch in the onClick event to change the State.
+  return (
+    <div>
+      <h2>Method Example 1:</h2>
+      <button type='button' onClick={LogSomething}>
+        Log something to the console
+      </button>
+
+      <h2>Method Example 2:</h2>
+      <button type='button' onClick={AlertSomething}>
+        Trigger alert
+      </button>
+    </div>
+  );
+}
+
+export default App;
+```
+
 You can use as many StateHubs as you want.
 
 ```javascript
