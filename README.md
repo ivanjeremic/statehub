@@ -66,7 +66,7 @@ import React from "react";
 import { DemoHub } from "../statehubs/DemoHub";
 
 function App() {
-  // call .use() or .methods() to use the state or method.
+  // call .use() or .methods() to use the state or custom methods.
   const [state, dispatch] = DemoHub.use();
   const { LogSomething, AlertSomething, useDemoHook } = DemoHub.methods();
 
