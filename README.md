@@ -10,15 +10,15 @@
 Everything starts with creating a new StateHub with `createHub`, this StateHub is everything you will ever need in your components, no other unnecessary imports!
 
 ```javascript
-import { createHub } from 'statehub';
+import { createHub } from "statehub";
 
 export const DemoHub = createHub({
-  state: { title: 'Welcome to StateHub' },
+  state: { title: "Welcome to StateHub" },
   reducer: (state, action) => {
     switch (action.type) {
-      case 'CHANGE_TITLE': {
+      case "CHANGE_TITLE": {
         return {
-          title: 'This is the changed StateHub title.',
+          title: "This is the changed StateHub title.",
         };
       }
       default:
@@ -27,10 +27,14 @@ export const DemoHub = createHub({
   },
   methods: {
     LogSomething: function () {
-      console.log('Hello Statehub');
+      console.log("Hello Statehub");
     },
     AlertSomething: function () {
-      alert('StateHub Alert!');
+      alert("StateHub Alert!");
+    },
+    useDemoHook: function () {
+      const [buttonText, setButtonText] = useState("useDemoHook");
+      return [buttonText, setButtonText];
     },
   },
 });
@@ -41,8 +45,8 @@ Now wrap your App with the Provider who comes with the DemoHub you created befor
 \*As you can see the API is very clean everything you ever `import` is your created StateHub and nothing more.
 
 ```javascript
-import React from 'react';
-import { DemoHub } from '../hubs/DemoHub';
+import React from "react";
+import { DemoHub } from "../statehubs/DemoHub";
 
 export default function Index() {
   return (
@@ -55,30 +59,39 @@ export default function Index() {
 
 Now you can use the state in your component.
 
-And again you can see, everything you need is coming from your created StateHub, no other imports are required except your DemoHub.
+Everything you need is coming from your created StateHub, no other imports are required except your DemoHub.
 
 ```javascript
-import React from 'react';
-import { DemoHub } from '../hubs/DemoHub';
+import React from "react";
+import { DemoHub } from "../statehubs/DemoHub";
 
 function App() {
-  const [state, dispatch, methods] = DemoHub.use(); // call .use() to use the state.
+  // call .use() or .methods() to use the state or method.
+  const [state, dispatch] = DemoHub.use();
+  const { LogSomething, AlertSomething, useDemoHook } = DemoHub.methods();
+
+  const [buttonText, setButtonText] = useDemoHook();
 
   return (
     <div>
       <h2>{state.title}</h2>
-      <button onClick={() => dispatch({ type: 'CHANGE_TITLE' })}>
+      <button onClick={() => dispatch({ type: "CHANGE_TITLE" })}>
         Change Title
       </button>
 
       <h2>Method Example 1:</h2>
-      <button type='button' onClick={methods.LogSomething}>
+      <button type="button" onClick={LogSomething}>
         Log something to the console
       </button>
 
       <h2>Method Example 2:</h2>
-      <button type='button' onClick={methods.AlertSomething}>
+      <button type="button" onClick={AlertSomething}>
         Trigger alert
+      </button>
+
+      <h2>Method Custom Hook example 3:</h2>
+      <button type="button" onClick={() => setButtonText("Hooked!")}>
+        {buttonText}
       </button>
     </div>
   );
@@ -90,8 +103,8 @@ export default App;
 state & reducer is optional that means you can create StateHub's with methods only and retrieve them directly where needed by calling `YourHub.methods()`.
 
 ```javascript
-import React from 'react';
-import { DemoHub } from '../hubs/DemoHub';
+import React from "react";
+import { DemoHub } from "../statehubs/DemoHub";
 
 function App() {
   const { LogSomething, AlertSomething } = DemoHub.methods();
@@ -99,12 +112,12 @@ function App() {
   return (
     <div>
       <h2>Method Example 1:</h2>
-      <button type='button' onClick={LogSomething}>
+      <button type="button" onClick={LogSomething}>
         Log something to the console
       </button>
 
       <h2>Method Example 2:</h2>
-      <button type='button' onClick={AlertSomething}>
+      <button type="button" onClick={AlertSomething}>
         Trigger alert
       </button>
     </div>
@@ -117,9 +130,14 @@ export default App;
 You can use as many StateHubs as you want.
 
 ```javascript
-import React from 'react';
-import App from '../components/App';
-import { AuthHub, DatabaseHub, ResponsiveHub, ModalHub } from '../hubs/DemoHub';
+import React from "react";
+import App from "../components/App";
+import {
+  AuthHub,
+  DatabaseHub,
+  ResponsiveHub,
+  ModalHub,
+} from "../statehubs/DemoHub";
 
 export default function Index() {
   return (
@@ -142,8 +160,8 @@ To support React < 16.8.0, where the Context needs to be consumed by class
 components here the render-prop based API for context consumers:
 
 ```javascript
-import React from 'react';
-import { DemoHub } from '../hubs/DemoHub';
+import React from "react";
+import { DemoHub } from "../statehubs/DemoHub";
 
 class App extends React.Component {
   render() {
@@ -152,17 +170,17 @@ class App extends React.Component {
         {(state, dispatch, methods) => (
           <div>
             <h2>{state.title}</h2>
-            <button onClick={() => dispatch({ type: 'CHANGE_TITLE' })}>
+            <button onClick={() => dispatch({ type: "CHANGE_TITLE" })}>
               Change Title
             </button>
 
             <h2>Method Example 1:</h2>
-            <button type='button' onClick={methods.LogSomething}>
+            <button type="button" onClick={methods.LogSomething}>
               Log something to the console
             </button>
 
             <h2>Method Example 2:</h2>
-            <button type='button' onClick={methods.AlertSomething}>
+            <button type="button" onClick={methods.AlertSomething}>
               Trigger alert
             </button>
           </div>

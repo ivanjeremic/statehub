@@ -1,40 +1,33 @@
-import React, { createContext, useContext, useReducer } from 'react';
-
-const StateContainer = (ThisContext) => {
-  // add checks
-  const context = useContext(ThisContext);
-  return context;
-};
-
-const DispatchContainer = (ThisDispatch) => {
-  // add checks
-  const context = useContext(ThisDispatch);
-  return context;
-};
-
-const MethodsContainer = (ThisMethods) => {
-  // add checks
-  const context = useContext(ThisMethods);
-  return context;
-};
+import React, { createContext, useContext, useReducer } from "react";
 
 const createHub = (options) => {
-  const ThisContext = createContext({});
-  const ThisDispatch = createContext({});
-  const ThisMethods = createContext({});
+  const Context = createContext();
+  const Dispatch = createContext();
+  const Methods = createContext();
+
+  const StateContainer = (Context) => {
+    const context = useContext(Context);
+    return context;
+  };
+
+  const DispatchContainer = (Dispatch) => {
+    const context = useContext(Dispatch);
+    return context;
+  };
+
+  const MethodsContainer = (Methods) => {
+    const context = useContext(Methods);
+    return context;
+  };
 
   let dispatcher;
 
   return {
     use: () => {
-      return [
-        StateContainer(ThisContext),
-        DispatchContainer(ThisDispatch),
-        MethodsContainer(ThisMethods),
-      ];
+      return [StateContainer(Context), DispatchContainer(Dispatch)];
     },
     methods: () => {
-      return MethodsContainer(ThisMethods);
+      return MethodsContainer(Methods);
     },
     Provider: ({ children }) => {
       const [state, dispatch] = useReducer(options?.reducer, options?.state);
@@ -42,29 +35,29 @@ const createHub = (options) => {
       dispatcher = dispatch;
 
       return (
-        <ThisContext.Provider value={state}>
-          <ThisDispatch.Provider value={dispatch}>
-            <ThisMethods.Provider value={options?.methods}>
+        <Context.Provider value={state}>
+          <Dispatch.Provider value={dispatch}>
+            <Methods.Provider value={options?.methods}>
               {children}
-            </ThisMethods.Provider>
-          </ThisDispatch.Provider>
-        </ThisContext.Provider>
+            </Methods.Provider>
+          </Dispatch.Provider>
+        </Context.Provider>
       );
     },
     Consumer: ({ children }) => {
       return (
-        <ThisMethods.Consumer>
+        <Methods.Consumer>
           {(methods) => (
-            <ThisContext.Consumer>
+            <Context.Consumer>
               {(context) => {
                 if (context === undefined) {
-                  throw new Error('Consumer must be used within a Provider');
+                  throw new Error("Consumer must be used within a Provider");
                 }
                 return children(context, dispatcher, methods);
               }}
-            </ThisContext.Consumer>
+            </Context.Consumer>
           )}
-        </ThisMethods.Consumer>
+        </Methods.Consumer>
       );
     },
   };
